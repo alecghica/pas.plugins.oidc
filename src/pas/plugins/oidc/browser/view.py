@@ -186,7 +186,11 @@ class CallbackView(BrowserView):
             came_from = session.get("came_from")
 
         portal_url = api.portal.get_tool("portal_url")
-        if came_from and portal_url.isURLInPortal(came_from):
-            return came_from
-        else:
-            return api.portal.get().absolute_url()
+        if not (came_from and portal_url.isURLInPortal(came_from)):
+            came_from = api.portal.get().absolute_url()
+
+        # Volto frontend mapping exception
+        if came_from.endswith('/api'):
+            came_from = came_from[:-4]
+
+        return came_from
