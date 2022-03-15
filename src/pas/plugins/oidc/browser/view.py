@@ -109,11 +109,17 @@ class LogoutView(BrowserView):
         # state is used to keep track of responses to outstanding requests (state).
         # https://github.com/keycloak/keycloak-documentation/blob/master/securing_apps/topics/oidc/java/logout.adoc
         # session.set('end_session_state', rndstr())
+
+        # Volto frontend mapping exception
+        redirect_uri = api.portal.get().absolute_url()
+        if redirect_uri.endswith('/api'):
+            redirect_uri = redirect_uri[:-4]
+
         args = {
             # 'state': session.get('end_session_state'),
             # TODO: ....
             # 'post_logout_redirect_uri': api.portal.get().absolute_url(),
-            "redirect_uri": api.portal.get().absolute_url(),
+            "redirect_uri": redirect_uri,
         }
         # end_req = client.construct_EndSessionRequest(request_args=args)
         end_req = EndSessionRequest(**args)
