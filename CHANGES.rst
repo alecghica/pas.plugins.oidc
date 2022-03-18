@@ -5,6 +5,8 @@ Changelog
 1.0a3 (unreleased)
 ------------------
 
+- Various changes regardding the redirect logic
+  [alecghica]
 - Updated setup.py to fix the Python requires #4
   [alecghica]
 - check if url is in portal before redirect #2 
