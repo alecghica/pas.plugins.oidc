@@ -1,8 +1,11 @@
 Changelog
 =========
 
+1.1a1 (unreleased)
+------------------
 
-1.0a3 (unreleased)
+
+1.0 (2022-03-18)
 ------------------
 
 - Various changes regardding the redirect logic
