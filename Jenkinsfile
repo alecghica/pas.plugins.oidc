@@ -3,7 +3,7 @@ pipeline {
 
   environment {
         GIT_NAME = "pas.plugins.oidc"
-        SONARQUBE_TAGS = "www.eea.europa.eu"
+        SONARQUBE_TAGS = "circularity.eea.europa.eu"
         GIT_HISTORYFILE = "CHANGES.rst"
     }
 
