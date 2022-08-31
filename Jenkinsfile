@@ -180,7 +180,7 @@ pipeline {
         not {
           environment name: 'CHANGE_ID', value: ''
         }
-        environment name: 'CHANGE_TARGET', value: 'main'
+        environment name: 'CHANGE_TARGET', value: 'master'
       }
       steps {
         node(label: 'docker') {
@@ -200,7 +200,7 @@ pipeline {
       when {
         allOf {
           environment name: 'CHANGE_ID', value: ''
-          branch 'main'
+          branch 'master'
         }
       }
       steps {
