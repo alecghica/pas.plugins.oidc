@@ -19,11 +19,13 @@ from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.utils import classImplements
 from random import choice
 from ZODB.POSException import ConflictError
+from zope.component.hooks import getSite
 from zope.interface import Interface
 from zope.interface import implementer
 
 import itertools
 import logging
+import os
 import six
 import string
 import time
@@ -33,6 +35,46 @@ logger = logging.getLogger(__name__)
 # _MARKER = object()
 PWCHARS = string.ascii_letters + string.digits + string.punctuation
 # LAST_UPDATE_USER_PROPERTY_KEY = 'last_autousermaker_update'
+
+
+def context_property(name, default=None):
+
+    def getter(self, name=name, default=default):
+        if getattr(self, name) is default:
+            SITE_STRING = '_' + getSite().getId()
+            env_var = "OIDC" + name.upper() + SITE_STRING
+            env_value = os.environ.get(env_var, default)
+
+            if env_value == default:
+                env_value = os.environ.get("OIDC" + name.upper(), default)
+
+            if env_value == default:
+                return env_value
+
+            if type(default) is bool:
+                if env_value.lower() == "true":
+                    env_value = True
+
+                if env_value.lower() == "false":
+                    env_value = False
+
+            if type(default) is tuple:
+                if ',' in env_value:
+                    env_value = tuple(env_value.split(','))
+                else:
+                    env_value = (env_value, )
+
+            return env_value
+
+        return getattr(self, name)
+
+    def setter(self, value, name=name):
+        setattr(self, name, value)
+
+    def deleter(self, name=name):
+        delattr(self, name)
+
+    return property(getter, setter, deleter)
 
 
 class IOIDCPlugin(Interface):
@@ -47,17 +89,29 @@ class OIDCPlugin(BasePlugin):
     meta_type = 'OIDC Plugin'
     security = ClassSecurityInfo()
 
-    issuer = ''
-    client_id = ''
-    client_secret = ''
-    redirect_uris = ()
-    use_session_data_manager = False
-    create_ticket = True
-    create_restapi_ticket = False
-    create_user = True
-    scope = ('profile', 'email', 'phone')
-    use_pkce = False
-    use_modified_openid_schema = False
+    _issuer = ''
+    _client_id = ''
+    _client_secret = ''
+    _redirect_uris = ()
+    _use_session_data_manager = False
+    _create_ticket = True
+    _create_restapi_ticket = False
+    _create_user = True
+    _scope = ('profile', 'email', 'phone')
+    _use_pkce = False
+    _use_modified_openid_schema = False
+
+    issuer = context_property('_issuer', '')
+    client_id = context_property('_client_id', '')
+    client_secret = context_property('_client_secret', '')
+    redirect_uris = context_property('_redirect_uris', ())
+    use_session_data_manager = context_property('_use_session_data_manager', False)
+    create_ticket = context_property('_create_ticket', True)
+    create_restapi_ticket = context_property('_create_restapi_ticket', False)
+    create_user = context_property('_create_user', True)
+    scope = context_property('_scope', ('profile', 'email', 'phone'))
+    use_pkce = context_property('_use_pkce', False)
+    use_modified_openid_schema = context_property('_use_modified_openid_schema', False)
 
     _properties = (
         dict(id='issuer', type='string', mode='w',
