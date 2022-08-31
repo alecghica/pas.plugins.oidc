@@ -106,11 +106,11 @@ class OIDCPlugin(BasePlugin):
     client_secret = context_property('_client_secret', '')
     redirect_uris = context_property('_redirect_uris', ())
     use_session_data_manager = context_property('_use_session_data_manager', False)
-    create_ticket = context_property('_create_ticket', True)
-    create_restapi_ticket = context_property('_create_restapi_ticket', False)
-    create_user = context_property('_create_user', True)
+    create_ticket = context_property('_create_ticket', True) # crapa
+    create_restapi_ticket = context_property('_create_restapi_ticket', False) # crapa
+    create_user = context_property('_create_user', True) # crapa
     scope = context_property('_scope', ('profile', 'email', 'phone'))
-    use_pkce = context_property('_use_pkce', False)
+    use_pkce = context_property('_use_pkce', False) # crapa
     use_modified_openid_schema = context_property('_use_modified_openid_schema', False)
 
     _properties = (
@@ -147,7 +147,7 @@ class OIDCPlugin(BasePlugin):
         if pas is None:
             return
         user = pas.getUserById(user_id)
-        if self.create_user:
+        if self._create_user:
             # https://github.com/collective/Products.AutoUserMakerPASPlugin/blob/master/Products/AutoUserMakerPASPlugin/auth.py#L110
             if user is None:
                 with safe_write(self.REQUEST):
@@ -183,9 +183,9 @@ class OIDCPlugin(BasePlugin):
                 # if time.time() > user.getProperty(LAST_UPDATE_USER_PROPERTY_KEY) + config.get(autoUpdateUserPropertiesIntervalKey, 0):
                 with safe_write(self.REQUEST):
                     self._updateUserProperties(user, userinfo)
-        if user and self.create_ticket:
+        if user and self._create_ticket:
             self._setupTicket(user_id)
-        if user and self.create_restapi_ticket:
+        if user and self._create_restapi_ticket:
             self._setupJWTTicket(user_id, user)
 
     def _updateUserProperties(self, user, userinfo):
@@ -214,7 +214,7 @@ class OIDCPlugin(BasePlugin):
     def _setupTicket(self, user_id):
         """Set up authentication ticket (__ac cookie) with plone.session.
 
-        Only call this when self.create_ticket is True.
+        Only call this when self._create_ticket is True.
         """
         pas = self._getPAS()
         if pas is None:
@@ -233,7 +233,7 @@ class OIDCPlugin(BasePlugin):
     def _setupJWTTicket(self, user_id, user):
         """Set up JWT authentication ticket (auth_token cookie).
 
-        Only call this when self.create_restapi_ticket is True.
+        Only call this when self._create_restapi_ticket is True.
         """
         authenticators = self.plugins.listPlugins(IAuthenticationPlugin)
         plugin = None

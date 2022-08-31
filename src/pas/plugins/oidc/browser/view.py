@@ -81,7 +81,7 @@ class LoginView(BrowserView):
             "redirect_uri": self.context.get_redirect_uris(),
         }
 
-        if self.context.use_pkce:
+        if self.context._use_pkce:
             # Build a random string of 43 to 128 characters
             # and send it in the request as a base64-encoded urlsafe string of the sha256 hash of that string
             session.set("verifier", rndstr(128))
@@ -156,7 +156,7 @@ class CallbackView(BrowserView):
             "redirect_uri": self.context.get_redirect_uris(),
         }
 
-        if self.context.use_pkce:
+        if self.context._use_pkce:
             args["code_verifier"] = session.get("verifier")
 
         if self.context.use_modified_openid_schema:
