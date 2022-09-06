@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Installer for the pas.plugins.oidc package."""
 
+from os.path import join
 from setuptools import find_packages
 from setuptools import setup
 
@@ -12,9 +13,15 @@ long_description = '\n\n'.join([
 ])
 
 
+NAME = "pas.plugins.oidc"
+PATH = ["src"] + NAME.split(".") + ["version.txt"]
+VERSION = open(join(*PATH)).read().strip()
+
+
+
 setup(
-    name='pas.plugins.oidc',
-    version='1.2a1',
+    name=NAME,
+    version=VERSION,
     description="An add-on for Plone",
     long_description=long_description,
     # Get more from https://pypi.org/classifiers/
@@ -30,13 +37,13 @@ setup(
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     ],
     keywords='Python Plone CMS',
-    author='mamico',
-    author_email='mauro.amico@gmail.com',
-    url='https://github.com/collective/pas.plugins.oidc',
+    author='',
+    author_email='',
+    url='https://github.com/eea/pas.plugins.oidc',
     project_urls={
         'PyPI': 'https://pypi.python.org/pypi/pas.plugins.oidc',
-        'Source': 'https://github.com/collective/pas.plugins.oidc',
-        'Tracker': 'https://github.com/collective/pas.plugins.oidc/issues',
+        'Source': 'https://github.com/eea/pas.plugins.oidc',
+        'Tracker': 'https://github.com/eea/pas.plugins.oidc/issues',
         # 'Documentation': 'https://pas.plugins.oidc.readthedocs.io/en/latest/',
     },
     license='GPL version 2',
