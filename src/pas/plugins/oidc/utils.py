@@ -26,7 +26,8 @@ def boolean_string_deser(val, sformat=None, lev=0):
 
 
 # value type, required, serializer, deserializer, null value allowed
-SINGLE_OPTIONAL_BOOLEAN_AS_STRING = ParamDefinition(str, False, boolean_string_ser, boolean_string_deser, False)
+SINGLE_OPTIONAL_BOOLEAN_AS_STRING = ParamDefinition(str, False,
+        boolean_string_ser, boolean_string_deser, False)
 
 
 class CustomOpenIDNonBooleanSchema(OpenIDSchema):

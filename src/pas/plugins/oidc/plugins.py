@@ -105,13 +105,13 @@ class OIDCPlugin(BasePlugin):
     client_id = context_property('_client_id', '')
     client_secret = context_property('_client_secret', '')
     redirect_uris = context_property('_redirect_uris', ())
-    use_session_data_manager = context_property('_use_session_data_manager', False)
-    create_ticket = context_property('_create_ticket', True) # crapa
-    create_restapi_ticket = context_property('_create_restapi_ticket', False) # crapa
-    create_user = context_property('_create_user', True) # crapa
+    use_session_data_manager = context_property('_use_session_data_manager', False)  # noqa
+    create_ticket = context_property('_create_ticket', True)
+    create_restapi_ticket = context_property('_create_restapi_ticket', False)
+    create_user = context_property('_create_user', True)
     scope = context_property('_scope', ('profile', 'email', 'phone'))
-    use_pkce = context_property('_use_pkce', False) # crapa
-    use_modified_openid_schema = context_property('_use_modified_openid_schema', False)
+    use_pkce = context_property('_use_pkce', False)
+    use_modified_openid_schema = context_property('_use_modified_openid_schema', False)  # noqa
 
     _properties = (
         dict(id='issuer', type='string', mode='w',
@@ -135,7 +135,7 @@ class OIDCPlugin(BasePlugin):
         dict(id='use_pkce', type='boolean', mode='w',
              label='Use PKCE. '),
         dict(id='use_modified_openid_schema', type='boolean', mode='w',
-             label="Use a modified OpenID Schema for email_verified and phone_number_verified boolean values coming as string. "),
+             label="Use a modified OpenID Schema for email_verified and phone_number_verified boolean values coming as string. "),  # noqa
 
 
     )
@@ -153,24 +153,18 @@ class OIDCPlugin(BasePlugin):
                 with safe_write(self.REQUEST):
                     userAdders = self.plugins.listPlugins(IUserAdderPlugin)
                     if not userAdders:
-                        raise NotImplementedError("I wanted to make a new user, but"
-                                                " there are no PAS plugins active"
+                        raise NotImplementedError("I wanted to make a new user, but"  # noqa
+                                                " there are no PAS plugins active"  # noqa
                                                 " that can make users.")
-                    # roleAssigners = self.plugins.listPlugins(IRoleAssignerPlugin)
-                    # if not roleAssigners:
-                    #     raise NotImplementedError("I wanted to make a new user and give"
-                    #                             " him the Member role, but there are"
-                    #                             " no PAS plugins active that assign"
-                    #                             " roles to users.")
 
                     # Add the user to the first IUserAdderPlugin that works:
                     user = None
                     for _, curAdder in userAdders:
-                        if curAdder.doAddUser(user_id, self._generatePassword()):
+                        if curAdder.doAddUser(user_id, self._generatePassword()):  # noqa
                             # Assign a dummy password. It'll never be used;.
                             user = self._getPAS().getUser(user_id)
                             try:
-                                membershipTool = getToolByName(self, 'portal_membership')
+                                membershipTool = getToolByName(self, 'portal_membership')  # noqa
                                 if not membershipTool.getHomeFolder(user_id):
                                     membershipTool.createMemberArea(user_id)
                             except (ConflictError, KeyboardInterrupt):
@@ -180,7 +174,6 @@ class OIDCPlugin(BasePlugin):
                             self._updateUserProperties(user, userinfo)
                             break
             else:
-                # if time.time() > user.getProperty(LAST_UPDATE_USER_PROPERTY_KEY) + config.get(autoUpdateUserPropertiesIntervalKey, 0):
                 with safe_write(self.REQUEST):
                     self._updateUserProperties(user, userinfo)
         if user and self._create_ticket:
@@ -193,16 +186,13 @@ class OIDCPlugin(BasePlugin):
         This is utilised when first creating a user, and to update
         their information when logging in again later.
         """
-        # TODO: modificare solo se ci sono dei cambiamenti sui dati ?
-        # TODO: mettere in config il mapping tra metadati che arrivano da oidc e properties su plone
-        # TODO: warning nel caso non vengono tornati dati dell'utente
         userProps = {}
         if 'email' in userinfo:
             userProps['email'] = userinfo['email']
         if 'given_name' in userinfo and 'family_name' in userinfo:
-            userProps['fullname'] = '{} {}'.format(userinfo['given_name'], userinfo['family_name'])
+            userProps['fullname'] = '{} {}'.format(userinfo['given_name'], userinfo['family_name'])  # noqa
         elif 'name' in userinfo and 'family_name' in userinfo:
-            userProps['fullname'] = '{} {}'.format(userinfo['name'], userinfo['family_name'])
+            userProps['fullname'] = '{} {}'.format(userinfo['name'], userinfo['family_name'])  # noqa
         # userProps[LAST_UPDATE_USER_PROPERTY_KEY] = time.time()
         if userProps:
             user.setProperties(**userProps)
@@ -223,7 +213,7 @@ class OIDCPlugin(BasePlugin):
             return
         info = pas._verifyUser(pas.plugins, user_id=user_id)
         if info is None:
-            logger.debug('No user found matching header. Will not set up session.')
+            logger.debug('No user found matching header. Will not set up session.')  # noqa
             return
         request = self.REQUEST
         response = request['RESPONSE']
@@ -253,9 +243,11 @@ class OIDCPlugin(BasePlugin):
     # TODO: memoize (?)
     def get_oauth2_client(self):
         client = Client(client_authn_method=CLIENT_AUTHN_METHOD)
-        # registration_response = client.register(provider_info["registration_endpoint"], redirect_uris=...)
+        # registration_response = client.register(
+        #           provider_info["registration_endpoint"], redirect_uris=...)
         # ... oic.exception.RegistrationError: {'error': 'insufficient_scope',
-        #     'error_description': "Policy 'Trusted Hosts' rejected request to client-registration service. Details: Host not trusted."}
+        #     'error_description': "Policy 'Trusted Hosts' rejected request
+        #     to client-registration service. Details: Host not trusted."}
 
         # use WebFinger
         provider_info = client.provider_config(self.issuer)
@@ -318,10 +310,8 @@ def safe_write(request):
 def _registered_objects(request):
     """Collect all objects part of a pending write transaction."""
     app = request.PARENTS[-1]
-    return list(itertools.chain.from_iterable(
-        [conn._registered_objects
-         # skip the 'temporary' connection since it stores session objects
-         # which get written all the time
-         for name, conn in app._p_jar.connections.items() if name != 'temporary'
-        ]
-    ))
+    return list(itertools.chain.from_iterable([conn._registered_objects
+             # skip the 'temporary' connection since it stores session objects
+             # which get written all the time
+                for (name, conn) in app._p_jar.connections.items() if name
+                != 'temporary']))
