@@ -45,23 +45,23 @@ def context_property(name, default=None):
             env_var = "OIDC" + name.upper() + SITE_STRING
             env_value = os.environ.get(env_var, default)
 
-            if env_value == default:
+            if len(env_value) < 1:
                 env_value = os.environ.get("OIDC" + name.upper(), default)
-
-            if env_value == default:
-                return env_value
 
             if type(default) is bool:
                 if env_value.lower() == "true":
-                    env_value = True
+                    return True
 
                 if env_value.lower() == "false":
-                    env_value = False
+                    return False
 
             if type(default) is tuple:
                 if ',' in env_value:
-                    env_value = tuple(env_value.split(','))
+                    env_value = tuple("".join(env_value.split()).split(','))
                 else:
+                    if env_value == "":
+                        return ()
+
                     env_value = (env_value, )
 
             return env_value
