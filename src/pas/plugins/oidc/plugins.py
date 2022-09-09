@@ -22,10 +22,6 @@ from ZODB.POSException import ConflictError
 from zope.component.hooks import getSite
 from zope.interface import Interface
 from zope.interface import implementer
-# from Products.PluggableAuthService.interfaces.plugins import IChallengePlugin
-# from Products.PluggableAuthService.interfaces.plugins import IExtractionPlugin
-# from Products.PluggableAuthService.interfaces.plugins import IRolesPlugin
-# from Products.PluggableAuthService.interfaces.plugins import IPropertiesPlugin
 
 
 logger = logging.getLogger(__name__)
@@ -260,7 +256,7 @@ class OIDCPlugin(BasePlugin):
         if self.redirect_uris:
             return [safe_unicode(u) for u in self.redirect_uris]
 
-        return ['{}/callback'.format(self.absolute_url()),]
+        return ['{}/callback'.format(self.absolute_url()), ]
 
     def get_scopes(self):
         if self.scope:
@@ -307,5 +303,5 @@ def _registered_objects(request):
     return list(itertools.chain.from_iterable([conn._registered_objects
              # skip the 'temporary' connection since it stores session objects
              # which get written all the time
-                for (name, conn) in app._p_jar.connections.items() if name
-                != 'temporary']))
+                for (name, conn) in app._p_jar.connections.items() if name  # noqa
+                != 'temporary']))  # noqa

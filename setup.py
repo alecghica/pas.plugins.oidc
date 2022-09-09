@@ -1,3 +1,4 @@
+# pylint: disable=C0301
 # -*- coding: utf-8 -*-
 """Installer for the pas.plugins.oidc package."""
 
