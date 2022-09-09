@@ -243,7 +243,7 @@ class OIDCPlugin(BasePlugin):
         #     to client-registration service. Details: Host not trusted."}
 
         # use WebFinger
-        provider_info = client.provider_config(self.issuer)
+        provider_info = client.provider_config(self.issuer)  # noqa
         info = {
             'client_id': self.client_id,
             'client_secret': self.client_secret,
