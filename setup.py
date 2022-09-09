@@ -18,7 +18,6 @@ PATH = ["src"] + NAME.split(".") + ["version.txt"]
 VERSION = open(join(*PATH)).read().strip()
 
 
-
 setup(
     name=NAME,
     version=VERSION,
@@ -44,7 +43,7 @@ setup(
         'PyPI': 'https://pypi.python.org/pypi/pas.plugins.oidc',
         'Source': 'https://github.com/eea/pas.plugins.oidc',
         'Tracker': 'https://github.com/eea/pas.plugins.oidc/issues',
-        # 'Documentation': 'https://pas.plugins.oidc.readthedocs.io/en/latest/',
+        # 'Documentation':'https://pas.plugins.oidc.readthedocs.io/en/latest/',
     },
     license='GPL version 2',
     packages=find_packages('src', exclude=['ez_setup']),
@@ -52,7 +51,7 @@ setup(
     package_dir={'': 'src'},
     include_package_data=True,
     zip_safe=False,
-    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*",
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*",  # noqa
     install_requires=[
         'setuptools',
         # -*- Extra requirements: -*-

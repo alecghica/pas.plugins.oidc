@@ -1,12 +1,13 @@
-# pylint: disable=C0111, C0112, C0301, W0511
+# pylint: disable=C0111, C0112, C0301, W0511, W1201, W0612
 # -*- coding: utf-8 -*-
 import itertools
 import logging
 import os
 import string
+from contextlib import contextmanager
+from random import choice
 from AccessControl import ClassSecurityInfo
 from AccessControl.class_init import InitializeClass
-from contextlib import contextmanager
 from oic.oic import Client
 from oic.oic.message import RegistrationResponse
 from oic.utils.authn.client import CLIENT_AUTHN_METHOD
@@ -17,7 +18,6 @@ from Products.PluggableAuthService.interfaces.plugins import IAuthenticationPlug
 from Products.PluggableAuthService.interfaces.plugins import IUserAdderPlugin
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.utils import classImplements
-from random import choice
 from ZODB.POSException import ConflictError
 from zope.component.hooks import getSite
 from zope.interface import Interface
@@ -45,14 +45,14 @@ def context_property(name, default=None):
             if len(env_value) < 1:
                 env_value = os.environ.get("OIDC" + name.upper(), default)
 
-            if type(default) is bool:
+            if isinstance(default, bool):
                 if env_value.lower() == "true":
                     return True
 
                 if env_value.lower() == "false":
                     return False
 
-            if type(default) is tuple:
+            if isinstance(default, tuple):
                 if ',' in env_value:
                     env_value = tuple("".join(env_value.split()).split(','))
                 else:
@@ -259,16 +259,13 @@ class OIDCPlugin(BasePlugin):
     def get_redirect_uris(self):
         if self.redirect_uris:
             return [safe_unicode(u) for u in self.redirect_uris]
-        else:
-            return [
-                '{}/callback'.format(self.absolute_url()),
-            ]
+
+        return ['{}/callback'.format(self.absolute_url()),]
 
     def get_scopes(self):
         if self.scope:
             return [safe_unicode(u) for u in self.scope]
-        else:
-            return []
+        return []
 
 
 InitializeClass(OIDCPlugin)

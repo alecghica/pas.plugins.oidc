@@ -1,8 +1,8 @@
 # pylint: disable=C0111
 # -*- coding: utf-8 -*-
 import os
-import robotsuite
 import unittest
+import robotsuite
 from pas.plugins.oidc.testing import PAS_PLUGINS_OIDC_ACCEPTANCE_TESTING
 from plone.app.testing import ROBOT_TEST_LEVEL
 from plone.testing import layered
