@@ -8,6 +8,8 @@ Changelog
 
 1.2a1 (2022-09-09)
 ------------------
+- Removed hardcoded auth cookie name
+  [alecghica]
 
 1.1 (2022-03-18)
 ------------------
