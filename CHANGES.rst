@@ -5,7 +5,7 @@ Changelog
 ---------------------------
 * Change: Merge #153090 [Petchesi-Iulian]
 
-1.2a1 (unreleased)
+1.2a1 (2022-09-09)
 ------------------
 
 1.1 (2022-03-18)
@@ -26,13 +26,13 @@ Changelog
 - manage came_from
   [mamico]
 
-1.0a2 (unreleased)
+1.0a2 (2022-09-09)
 ------------------
 
 - do userinforequest if there is a client.userinfo_endpoint
   [mamico]
 
-1.0a1 (unreleased)
+1.0a1 (2022-09-09)
 ------------------
 
 - Initial release.
