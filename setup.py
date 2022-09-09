@@ -61,6 +61,8 @@ setup(
         'plone.restapi',
         # 'oidcrp',
         'oic',
+        'plone.app.robotframework',
+        'robotsuite',
     ],
     extras_require={
         'test': [
@@ -70,9 +72,7 @@ setup(
             # plone_coredev tests as of 2016-04-01.
             'plone.testing>=5.0.0',
             'plone.app.contenttypes',
-            'plone.app.robotframework',
             'plone.app.robotframework[debug]',
-            'robotsuite'
         ],
     },
     entry_points="""
