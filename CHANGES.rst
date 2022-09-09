@@ -3,7 +3,8 @@ Changelog
 
 1.2 - (2022-09-09)
 ---------------------------
-* Change: Merge #153090 [Petchesi-Iulian]
+* Change: Can now set properties via env vars
+ [iulianpetchesi]
 
 1.2a1 (2022-09-09)
 ------------------
@@ -21,7 +22,7 @@ Changelog
   [alecghica]
 - Updated setup.py to fix the Python requires #4
   [alecghica]
-- check if url is in portal before redirect #2 
+- check if url is in portal before redirect #2
   [erral]
 - manage came_from
   [mamico]
