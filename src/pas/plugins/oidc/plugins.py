@@ -244,13 +244,15 @@ class OIDCPlugin(BasePlugin):
 
         # use WebFinger
         provider_info = client.provider_config(self.issuer)
+        logger.info("Provider info:")
+        logger.info(provider_info)
+
         info = {
             'client_id': self.client_id,
             'client_secret': self.client_secret,
         }
         client_reg = RegistrationResponse(**info)
         client.store_registration_info(client_reg)
-        provider_info = {}
         return client
 
     def get_redirect_uris(self):
