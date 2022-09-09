@@ -303,5 +303,4 @@ def _registered_objects(request):
     return list(itertools.chain.from_iterable([conn._registered_objects
              # skip the 'temporary' connection since it stores session objects
              # which get written all the time
-                for (name, conn) in app._p_jar.connections.items() if name  # noqa
-                != 'temporary']))  # noqa
+                for (name, conn) in app._p_jar.connections.items() if name != 'temporary']))  # noqa

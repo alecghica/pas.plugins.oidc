@@ -98,11 +98,12 @@ class LoginView(BrowserView):
         """ build a sha256 hash of the base64 encoded value of value
         be careful: this should be url-safe base64 and we should also
         remove the trailing '='
-        See https://www.stefaanlippens.net/oauth-code-flow-pkce.html#PKCE-code-verifier-and-challenge
+        See https://www.stefaanlippens.net/oauth-code-flow-pkce.html
+            #PKCE-code-verifier-and-challenge
         """
         hash_code = sha256(value.encode("utf-8")).digest()
         return base64.urlsafe_b64encode(hash_code).decode('utf-8').replace('=',
-                '')
+                                                                           '')
 
 
 class LogoutView(BrowserView):
