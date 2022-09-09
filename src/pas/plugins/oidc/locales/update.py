@@ -1,8 +1,9 @@
+# pylint: disable=C0111, C0301
 # -*- coding: utf-8 -*-
 
 import os
-import pkg_resources
 import subprocess
+import pkg_resources
 
 
 domain = 'pas.plugins.oidc'

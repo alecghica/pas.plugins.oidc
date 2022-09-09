@@ -1,10 +1,10 @@
+# pylint: disable=C0111
 # -*- coding: utf-8 -*-
 """Setup tests for this package."""
-from pas.plugins.oidc.testing import PAS_PLUGINS_OIDC_INTEGRATION_TESTING  # noqa: E501
+import unittest
+from pas.plugins.oidc.testing import PAS_PLUGINS_OIDC_INTEGRATION_TESTING
 from plone import api
 from plone.app.testing import setRoles, TEST_USER_ID
-
-import unittest
 
 
 try:

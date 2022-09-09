@@ -1,11 +1,12 @@
+# pylint: disable=C0111
 # -*- coding: utf-8 -*-
-from pas.plugins.oidc.testing import PAS_PLUGINS_OIDC_ACCEPTANCE_TESTING  # noqa: E501
-from plone.app.testing import ROBOT_TEST_LEVEL
-from plone.testing import layered
-
 import os
 import robotsuite
 import unittest
+from pas.plugins.oidc.testing import PAS_PLUGINS_OIDC_ACCEPTANCE_TESTING
+from plone.app.testing import ROBOT_TEST_LEVEL
+from plone.testing import layered
+
 
 
 def test_suite():

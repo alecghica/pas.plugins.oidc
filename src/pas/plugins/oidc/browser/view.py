@@ -1,18 +1,16 @@
+# pylint: disable=C0111, C0301
+import base64
+import json
+import logging
 from hashlib import sha256
 from oic import rndstr
-from oic.oic import Client
 from oic.oic.message import AuthorizationResponse
 from oic.oic.message import EndSessionRequest
 from oic.oic.message import IdToken
-from pas.plugins.oidc.utils import CustomOpenIDNonBooleanSchema
 from pas.plugins.oidc.utils import SINGLE_OPTIONAL_BOOLEAN_AS_STRING
 from plone import api
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
-
-import base64
-import json
-import logging
 
 
 logger = logging.getLogger(__name__)
@@ -127,7 +125,6 @@ class LogoutView(BrowserView):
 
         args = {
             # 'state': session.get('end_session_state'),
-            # TODO: ....
             # 'post_logout_redirect_uri': api.portal.get().absolute_url(),
             "redirect_uri": redirect_uri,
         }
@@ -140,7 +137,6 @@ class LogoutView(BrowserView):
         pas = getToolByName(self.context, "acl_users")
         auth_cookie_name = pas.credentials_cookie_auth.cookie_name
 
-        # TODO: change path with portal_path
         self.request.response.expireCookie(auth_cookie_name, path="/")
         self.request.response.expireCookie("auth_token", path="/")
         self.request.response.redirect(logout_url)
@@ -159,8 +155,7 @@ class CallbackView(BrowserView):
         aresp = client.parse_response(
             AuthorizationResponse, info=response, sformat="urlencoded"
         )
-        # XXX: togliere debug e reinserire assert dopo aver trovato eventuali
-        # anomalie
+
         logger.info("DEBUG %s %s", aresp.get("state"), session.get("state"))
         # assert aresp["state"] == session.get("state")
         args = {

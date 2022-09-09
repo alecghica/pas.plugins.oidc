@@ -1,19 +1,19 @@
+# pylint: disable=C0111, C0112, C0301, W0511
 # -*- coding: utf-8 -*-
+import itertools
+import logging
+import os
+import string
 from AccessControl import ClassSecurityInfo
 from AccessControl.class_init import InitializeClass
 from contextlib import contextmanager
 from oic.oic import Client
 from oic.oic.message import RegistrationResponse
 from oic.utils.authn.client import CLIENT_AUTHN_METHOD
-from plone import api
 from plone.protect.utils import safeWrite
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.PluggableAuthService.interfaces.plugins import IAuthenticationPlugin  # noqa
-from Products.PluggableAuthService.interfaces.plugins import IChallengePlugin
-from Products.PluggableAuthService.interfaces.plugins import IExtractionPlugin
-from Products.PluggableAuthService.interfaces.plugins import IPropertiesPlugin
-from Products.PluggableAuthService.interfaces.plugins import IRolesPlugin
 from Products.PluggableAuthService.interfaces.plugins import IUserAdderPlugin
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.utils import classImplements
@@ -22,13 +22,10 @@ from ZODB.POSException import ConflictError
 from zope.component.hooks import getSite
 from zope.interface import Interface
 from zope.interface import implementer
-
-import itertools
-import logging
-import os
-import six
-import string
-import time
+# from Products.PluggableAuthService.interfaces.plugins import IChallengePlugin
+# from Products.PluggableAuthService.interfaces.plugins import IExtractionPlugin
+# from Products.PluggableAuthService.interfaces.plugins import IRolesPlugin
+# from Products.PluggableAuthService.interfaces.plugins import IPropertiesPlugin
 
 
 logger = logging.getLogger(__name__)
