@@ -1,6 +1,9 @@
 Changelog
 =========
 
+1.3-dev0 - (unreleased)
+---------------------------
+
 1.2 - (2022-09-09)
 ------------------
 - Change: Can now set properties via env vars
