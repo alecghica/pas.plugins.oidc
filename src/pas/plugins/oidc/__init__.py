@@ -1,3 +1,4 @@
+# pylint: disable=C0111, C0301
 # -*- coding: utf-8 -*-
 """Init and utils."""
 from AccessControl.Permissions import manage_users as ManageUsers

@@ -1,6 +1,8 @@
+# pylint: disable=C0301
 # -*- coding: utf-8 -*-
 """Installer for the pas.plugins.oidc package."""
 
+from os.path import join
 from setuptools import find_packages
 from setuptools import setup
 
@@ -12,10 +14,16 @@ long_description = '\n\n'.join([
 ])
 
 
+NAME = "pas.plugins.oidc"
+PATH = ["src"] + NAME.split(".") + ["version.txt"]
+VERSION = open(join(*PATH)).read().strip()
+
+
 setup(
-    name='pas.plugins.oidc',
-    version='1.2a1',
+    name=NAME,
+    version=VERSION,
     description="An add-on for Plone",
+    long_description_content_type="text/x-rst",
     long_description=long_description,
     # Get more from https://pypi.org/classifiers/
     classifiers=[
@@ -30,14 +38,14 @@ setup(
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     ],
     keywords='Python Plone CMS',
-    author='mamico',
-    author_email='mauro.amico@gmail.com',
-    url='https://github.com/collective/pas.plugins.oidc',
+    author='',
+    author_email='',
+    url='https://github.com/eea/pas.plugins.oidc',
     project_urls={
         'PyPI': 'https://pypi.python.org/pypi/pas.plugins.oidc',
-        'Source': 'https://github.com/collective/pas.plugins.oidc',
-        'Tracker': 'https://github.com/collective/pas.plugins.oidc/issues',
-        # 'Documentation': 'https://pas.plugins.oidc.readthedocs.io/en/latest/',
+        'Source': 'https://github.com/eea/pas.plugins.oidc',
+        'Tracker': 'https://github.com/eea/pas.plugins.oidc/issues',
+        # 'Documentation':'https://pas.plugins.oidc.readthedocs.io/en/latest/',
     },
     license='GPL version 2',
     packages=find_packages('src', exclude=['ez_setup']),
@@ -45,7 +53,7 @@ setup(
     package_dir={'': 'src'},
     include_package_data=True,
     zip_safe=False,
-    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*",
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*",  # noqa
     install_requires=[
         'setuptools',
         # -*- Extra requirements: -*-
@@ -54,6 +62,8 @@ setup(
         'plone.restapi',
         # 'oidcrp',
         'oic',
+        'plone.app.robotframework',
+        'robotsuite',
     ],
     extras_require={
         'test': [

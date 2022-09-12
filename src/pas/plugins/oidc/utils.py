@@ -1,3 +1,4 @@
+# pylint: disable=C0111
 from oic.oauth2.message import ParamDefinition
 from oic.oauth2.message import SINGLE_OPTIONAL_INT
 from oic.oauth2.message import SINGLE_OPTIONAL_STRING
@@ -5,7 +6,7 @@ from oic.oauth2.message import SINGLE_REQUIRED_STRING
 from oic.oic.message import OpenIDSchema
 from oic.oic.message import OPTIONAL_ADDRESS
 from oic.oic.message import OPTIONAL_MESSAGE
-from oic.oic.message import SINGLE_OPTIONAL_BOOLEAN
+# from oic.oic.message import SINGLE_OPTIONAL_BOOLEAN
 
 PLUGIN_ID = 'oidc'
 
@@ -26,7 +27,8 @@ def boolean_string_deser(val, sformat=None, lev=0):
 
 
 # value type, required, serializer, deserializer, null value allowed
-SINGLE_OPTIONAL_BOOLEAN_AS_STRING = ParamDefinition(str, False, boolean_string_ser, boolean_string_deser, False)
+SINGLE_OPTIONAL_BOOLEAN_AS_STRING = ParamDefinition(str, False,
+        boolean_string_ser, boolean_string_deser, False)  # noqa
 
 
 class CustomOpenIDNonBooleanSchema(OpenIDSchema):
