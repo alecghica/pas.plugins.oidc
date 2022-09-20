@@ -3,6 +3,8 @@ Changelog
 
 1.3-dev0 - (unreleased)
 ---------------------------
+- Change: Fixed multiple env vars errors
+ [iulianpetchesi]
 
 1.2 - (2022-09-09)
 ------------------
