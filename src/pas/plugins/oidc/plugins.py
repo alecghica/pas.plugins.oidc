@@ -38,8 +38,11 @@ def context_property(name, default=None):
             env_var = "OIDC" + name.upper() + SITE_STRING
             env_value = os.environ.get(env_var, default)
 
-            if len(env_value) < 1:
+            if env_value == default:
                 env_value = os.environ.get("OIDC" + name.upper(), default)
+
+            if env_value == default:
+                return env_value
 
             if isinstance(default, bool):
                 if env_value.lower() == "true":
