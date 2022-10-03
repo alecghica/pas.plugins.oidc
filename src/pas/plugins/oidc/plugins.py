@@ -33,38 +33,38 @@ PWCHARS = string.ascii_letters + string.digits + string.punctuation
 def context_property(name, default=None):
 
     def getter(self, name=name, default=default):
-        if getattr(self, name) is default:
-            SITE_STRING = '_' + getSite().getId()
-            env_var = "OIDC" + name.upper() + SITE_STRING
-            env_value = os.environ.get(env_var, default)
+        SITE_STRING = '_' + getSite().getId()
+        env_var = "OIDC" + name.upper() + SITE_STRING
+        env_value = os.environ.get(env_var, default)
 
-            if env_value == default:
-                env_value = os.environ.get("OIDC" + name.upper(), default)
+        if env_value == default:
+            env_value = os.environ.get("OIDC" + name.upper(), default)
 
-            if env_value == default:
-                return env_value
-
-            if isinstance(default, bool):
-                if env_value.lower() == "true":
-                    return True
-
-                if env_value.lower() == "false":
-                    return False
-
-                return default
-
-            if isinstance(default, tuple):
-                if ',' in env_value:
-                    env_value = tuple("".join(env_value.split()).split(','))
-                else:
-                    if env_value == "":
-                        return ()
-
-                    env_value = (env_value, )
-
+        if env_value == default:
             return env_value
 
-        return getattr(self, name)
+        if isinstance(default, bool):
+            if env_value.lower() == "true":
+                return True
+
+            if env_value.lower() == "false":
+                return False
+
+            return default
+
+        if isinstance(default, tuple):
+            if ',' in env_value:
+                env_value = tuple("".join(env_value.split()).split(','))
+            else:
+                if env_value == "":
+                    return ()
+
+                env_value = (env_value, )
+
+        if env_value == "":
+            return getattr(self, name)
+
+        return env_value
 
     def setter(self, value, name=name):
         setattr(self, name, value)
