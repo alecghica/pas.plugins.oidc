@@ -11,13 +11,13 @@ Changelog
 ---------------------------
 
 - Change: Fixed multiple env vars errors
- [iulianpetchesi]
+  [iulianpetchesi]
 
 1.2 - (2022-09-09)
 ------------------
 
 - Change: Can now set properties via env vars
- [iulianpetchesi]
+  [iulianpetchesi]
 
 1.2a1 (2022-09-09)
 ------------------
