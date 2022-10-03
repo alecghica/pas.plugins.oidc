@@ -1,17 +1,23 @@
 Changelog
 =========
 
-1.3-dev0 - (unreleased)
+1.4 - (2022-10-03)
+---------------------------
+
+- Change: Changed default values of some properties
+  [iulianpetchesi]
+
+1.3 - (2022-10-03)
 ---------------------------
 
 - Change: Fixed multiple env vars errors
- [iulianpetchesi]
+  [iulianpetchesi]
 
 1.2 - (2022-09-09)
 ------------------
 
 - Change: Can now set properties via env vars
- [iulianpetchesi]
+  [iulianpetchesi]
 
 1.2a1 (2022-09-09)
 ------------------

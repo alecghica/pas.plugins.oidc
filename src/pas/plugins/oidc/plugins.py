@@ -33,36 +33,38 @@ PWCHARS = string.ascii_letters + string.digits + string.punctuation
 def context_property(name, default=None):
 
     def getter(self, name=name, default=default):
-        if getattr(self, name) is default:
-            SITE_STRING = '_' + getSite().getId()
-            env_var = "OIDC" + name.upper() + SITE_STRING
-            env_value = os.environ.get(env_var, default)
+        SITE_STRING = '_' + getSite().getId()
+        env_var = "OIDC" + name.upper() + SITE_STRING
+        env_value = os.environ.get(env_var, default)
 
-            if env_value == default:
-                env_value = os.environ.get("OIDC" + name.upper(), default)
+        if env_value == default:
+            env_value = os.environ.get("OIDC" + name.upper(), default)
 
-            if env_value == default:
-                return env_value
-
-            if isinstance(default, bool):
-                if env_value.lower() == "true":
-                    return True
-
-                if env_value.lower() == "false":
-                    return False
-
-            if isinstance(default, tuple):
-                if ',' in env_value:
-                    env_value = tuple("".join(env_value.split()).split(','))
-                else:
-                    if env_value == "":
-                        return ()
-
-                    env_value = (env_value, )
-
+        if env_value == default:
             return env_value
 
-        return getattr(self, name)
+        if isinstance(default, bool):
+            if env_value.lower() == "true":
+                return True
+
+            if env_value.lower() == "false":
+                return False
+
+            return default
+
+        if isinstance(default, tuple):
+            if ',' in env_value:
+                env_value = tuple("".join(env_value.split()).split(','))
+            else:
+                if env_value == "":
+                    return ()
+
+                env_value = (env_value, )
+
+        if env_value == "":
+            return getattr(self, name)
+
+        return env_value
 
     def setter(self, value, name=name):
         setattr(self, name, value)
@@ -103,10 +105,10 @@ class OIDCPlugin(BasePlugin):
     redirect_uris = context_property('_redirect_uris', ())
     use_session_data_manager = context_property('_use_session_data_manager', False)  # noqa
     create_ticket = context_property('_create_ticket', True)
-    create_restapi_ticket = context_property('_create_restapi_ticket', False)
+    create_restapi_ticket = context_property('_create_restapi_ticket', True)
     create_user = context_property('_create_user', True)
     scope = context_property('_scope', ('profile', 'email', 'phone'))
-    use_pkce = context_property('_use_pkce', False)
+    use_pkce = context_property('_use_pkce', True)
     use_modified_openid_schema = context_property('_use_modified_openid_schema', False)  # noqa
 
     _properties = (
