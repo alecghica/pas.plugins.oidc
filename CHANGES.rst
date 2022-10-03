@@ -5,7 +5,7 @@ Changelog
 ---------------------------
 
 - Change: Changed default values of some properties
- [iulianpetchesi]
+  [iulianpetchesi]
 
 1.3-dev0 - (unreleased)
 ---------------------------
