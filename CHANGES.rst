@@ -1,13 +1,13 @@
 Changelog
 =========
 
-1.4-dev0 - (unreleased)
+1.4 - (2022-10-03)
 ---------------------------
 
 - Change: Changed default values of some properties
   [iulianpetchesi]
 
-1.3-dev0 - (unreleased)
+1.3 - (2022-10-03)
 ---------------------------
 
 - Change: Fixed multiple env vars errors
