@@ -51,6 +51,8 @@ def context_property(name, default=None):
                 if env_value.lower() == "false":
                     return False
 
+                return default
+
             if isinstance(default, tuple):
                 if ',' in env_value:
                     env_value = tuple("".join(env_value.split()).split(','))
@@ -103,10 +105,10 @@ class OIDCPlugin(BasePlugin):
     redirect_uris = context_property('_redirect_uris', ())
     use_session_data_manager = context_property('_use_session_data_manager', False)  # noqa
     create_ticket = context_property('_create_ticket', True)
-    create_restapi_ticket = context_property('_create_restapi_ticket', False)
+    create_restapi_ticket = context_property('_create_restapi_ticket', True)
     create_user = context_property('_create_user', True)
     scope = context_property('_scope', ('profile', 'email', 'phone'))
-    use_pkce = context_property('_use_pkce', False)
+    use_pkce = context_property('_use_pkce', True)
     use_modified_openid_schema = context_property('_use_modified_openid_schema', False)  # noqa
 
     _properties = (

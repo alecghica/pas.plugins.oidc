@@ -4,6 +4,9 @@ Changelog
 1.4-dev0 - (unreleased)
 ---------------------------
 
+- Change: Changed default values of some properties
+ [iulianpetchesi]
+
 1.3-dev0 - (unreleased)
 ---------------------------
 
